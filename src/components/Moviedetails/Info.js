@@ -93,6 +93,8 @@ const Info = ({ movie }) => {
     validate();
   }, [movie.id, uid]);
 
+  console.log(movie.release_date);
+
   return (
     <div className='info'>
       <div className='banner ps-0 my-3 ps-lg-2 d-flex align-items-center flex-column flex-lg-row'>
