@@ -34,8 +34,6 @@ const App = () => {
     return () => unSubscribe();
   }, [dispatch]);
 
-  console.log(process.env.REACT_APP_FIREBASE_API_KEY);
-
   return (
     <Router>
       <Header />
