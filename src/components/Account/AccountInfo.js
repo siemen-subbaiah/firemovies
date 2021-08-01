@@ -27,14 +27,14 @@ const AccountInfo = () => {
           <p className='my-3'>
             Untill that you can enjoy the app, here are some quick links:
           </p>
-          <div className='add-links d-flex flex-column flex-lg-row'>
+          <div className='add-links d-flex'>
             <p>
               <Link to='/'>Home</Link>
             </p>
-            <p className='ms-0 ms-lg-3'>
+            <p className='ms-3'>
               <Link to='/search'>Search</Link>
             </p>
-            <p className='ms-0 ms-lg-3'>
+            <p className='ms-3'>
               <Link to='/favourites'>Favourites</Link>
             </p>
           </div>
