@@ -113,6 +113,11 @@ ul {
   color: #fff !important;
 }
 
+.my-sec-btn {
+  background-color: #db6d1f !important ;
+  color: #fff !important;
+}
+
 /* TRENDING AND BOX OFFICE MOVIES! */
 
 .scrollable-card {
@@ -199,9 +204,32 @@ ul {
   margin: 3rem auto;
 }
 
+.edit-user input {
+  outline: none;
+  padding: 0.35rem;
+  border: none;
+  border-radius: 4px;
+}
+
 /* .acc-img img {
   height: 500px;
 } */
+
+.user-details {
+  width: 90%;
+  padding: 1rem;
+  border: 1px solid #f66902;
+}
+
+.edit-icon {
+  position: relative;
+  left: 32rem;
+  background-color: #f66902;
+  font-size: 2rem;
+  padding: 0.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 /* ABOUT! */
 .about-stuff img {
@@ -237,6 +265,19 @@ footer a {
 } */
 
 @media (max-width: 770px) {
+  .user-details {
+    width: 100%;
+  }
+
+  .edit-icon {
+    position: initial;
+    left: 0;
+  }
+
+  .fsize {
+    font-size: 0.9rem;
+  }
+
   .logo {
     margin: 1rem;
     height: 20px;

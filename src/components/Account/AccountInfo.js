@@ -1,46 +1,147 @@
 import React from 'react';
+import { MdModeEdit, MdCancel } from 'react-icons/md';
+import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
 import profile from '../../images/profile.svg';
 
 const AccountInfo = () => {
   const user = useSelector(({ auth }) => auth.user);
 
+  const theUser = auth.currentUser;
+
+  const [message, setMessage] = useState('');
+  const [toggle, setToggle] = useState(false);
+  const [name, setName] = useState(user?.displayName);
+  const [email, setEmail] = useState(user?.email);
+
+  const handlePasswordReset = async () => {
+    try {
+      await auth.sendPasswordResetEmail(user.email);
+      setMessage('email sent successfully!');
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const handleUsernameUpdate = async () => {
+    try {
+      await theUser.updateProfile({
+        displayName: name,
+      });
+      console.log('successful!');
+      setToggle(false);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  const handleEmailUpdate = async () => {
+    try {
+      await theUser.updateEmail(email);
+      console.log('successful!');
+      setToggle(false);
+    } catch (error) {
+      alert(
+        'Session expired! please logout and login again to change the email address!'
+      );
+    }
+  };
+
   return (
     <Row>
       <Col lg={6} className='order-2 order-lg-1'>
         <div className='ac-det'>
-          <h2>{user.email}</h2>
           {user.displayName && (
-            <h5 className='my-4'>
-              Hello {user.displayName}! hope you're doing good!{' '}
-            </h5>
+            <h4 className='my-4'>
+              Hello {user.displayName}, hope you're doing good!{' '}
+            </h4>
           )}
-          <h6>
-            This page is under construction and here are the future plans :{' '}
-          </h6>
-          <p> - user can edit his/her email ,username and password</p>
-          <p> - user can send a password reset request from this page</p>
-          <p> - user can upload a profile picture</p>
-          <p className='my-3'>
-            Untill that you can enjoy the app, here are some quick links:
-          </p>
-          <div className='add-links d-flex'>
-            <p>
-              <Link to='/'>Home</Link>
-            </p>
-            <p className='ms-3'>
-              <Link to='/search'>Search</Link>
-            </p>
-            <p className='ms-3'>
-              <Link to='/favourites'>Favourites</Link>
-            </p>
+
+          <div className='user-details'>
+            <div className='edit-det'>
+              {toggle ? (
+                <MdCancel
+                  className='edit-icon'
+                  color='#fff'
+                  onClick={() => setToggle(false)}
+                />
+              ) : (
+                <MdModeEdit
+                  className='edit-icon'
+                  color='#fff'
+                  onClick={() => setToggle(true)}
+                />
+              )}
+            </div>
+            {toggle ? (
+              <>
+                <div className='my-4 d-block d-md-flex align-items-center edit-user'>
+                  <span className='h5'>
+                    <strong>username</strong>
+                  </span>
+                  <input
+                    type='text'
+                    name='name'
+                    className='ms-0 ms-md-3 my-2 my-md-0'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+
+                <div className='my-4 d-block d-md-flex align-items-center edit-user '>
+                  <span className='h5'>
+                    <strong>Email</strong>
+                  </span>
+                  <input
+                    type='text'
+                    name='name'
+                    className='ms-0 ms-md-5 my-2 my-md-0'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
+                <div className='d-flex align-items-center'>
+                  <button
+                    className='my-3 btn my-btn me-3'
+                    onClick={handleEmailUpdate}
+                  >
+                    Update email
+                  </button>
+                  <button
+                    className='my-3 btn my-btn'
+                    onClick={handleUsernameUpdate}
+                  >
+                    Update username
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h5 className='my-4'>
+                  <strong>username</strong> : {name}
+                </h5>
+                <h5 className='my-4 fsize'>
+                  <strong>Email</strong> : {email}
+                </h5>
+              </>
+            )}
           </div>
-          <button className='my-3 btn my-btn' onClick={() => auth.signOut()}>
-            Log out
-          </button>
+
+          <div className='d-flex'>
+            <button
+              className='my-3 btn my-sec-btn me-3'
+              onClick={handlePasswordReset}
+            >
+              Reset Password
+            </button>
+
+            <button className='my-3 btn my-btn' onClick={() => auth.signOut()}>
+              Log out
+            </button>
+          </div>
+          <p>{message}</p>
         </div>
       </Col>
       <Col lg={6} className='order-1 order-lg-2 mb-5 mb-lg-0'>
