@@ -1,6 +1,6 @@
 # Firemovies
 
-Movie app powerd by react in the frontend, redux for state management ,firebase for authentication and storing favourite movies and TMDB API for fetching movies🔥
+Movie app powerd by react in the frontend, redux for state management, firebase for authentication and for storing favourite movies and TMDB API for fetching movies🔥
 
 [Demo](https://firemovies.netlify.app)
 
