@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdModeEdit, MdCancel } from 'react-icons/md';
 import { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Toast } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { auth } from '../../firebase';
 import profile from '../../images/profile.svg';
@@ -16,10 +16,14 @@ const AccountInfo = () => {
   const [name, setName] = useState(user?.displayName);
   const [email, setEmail] = useState(user?.email);
 
+  const [showToast, setShowToast] = useState(true);
+
   const handlePasswordReset = async () => {
     try {
       await auth.sendPasswordResetEmail(user.email);
-      setMessage('email sent successfully!');
+      setMessage(
+        'Email sent successfully, follow the mail for further instructions'
+      );
     } catch (error) {
       alert(error);
     }
@@ -141,7 +145,19 @@ const AccountInfo = () => {
               Log out
             </button>
           </div>
-          <p>{message}</p>
+          {message.length > 1 && (
+            <Toast show={showToast} onClose={() => setShowToast(false)}>
+              <Toast.Header>
+                <img
+                  src='holder.js/20x20?text=%20'
+                  className='rounded me-2'
+                  alt=''
+                />
+                <strong className='me-auto'>Alert</strong>
+              </Toast.Header>
+              <Toast.Body>{message}</Toast.Body>
+            </Toast>
+          )}
         </div>
       </Col>
       <Col lg={6} className='order-1 order-lg-2 mb-5 mb-lg-0'>
