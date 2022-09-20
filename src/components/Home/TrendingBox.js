@@ -29,16 +29,16 @@ const TrendingBox = ({ title, url }) => {
       </h3>
       {loading ? <h4 className='text-center my-3'>Loading...</h4> : null}
       <div className='scrollable-card my-3 d-flex'>
-        {moives.map((item) => {
+        {moives?.map((item) => {
           return (
-            <Link to={`/movie/${item.id}`} key={item.id}>
+            <Link to={`/movie/${item?.id}`} key={item?.id}>
               <div className='movie-card'>
                 <img
-                  src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-                  alt={item.title}
+                  src={`https://image.tmdb.org/t/p/w500/${item?.poster_path}`}
+                  alt={item?.title}
                 />
-                <h5 className='mt-3'>{item.title}</h5>
-                <p>{moment(item.release_date).format('MMMM Do YYYY')}</p>
+                <h5 className='mt-3'>{item?.title}</h5>
+                <p>{moment(item?.release_date).format('MMMM Do YYYY')}</p>
               </div>
             </Link>
           );

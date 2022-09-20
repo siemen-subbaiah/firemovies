@@ -207,7 +207,7 @@ ul {
 .edit-user input {
   outline: none;
   padding: 0.35rem;
-  border: none;
+  border: 1px solid black;
   border-radius: 4px;
 }
 
@@ -217,8 +217,10 @@ ul {
 
 .user-details {
   width: 90%;
-  padding: 1rem;
-  border: 1px solid #f66902;
+  padding: 1.1rem;
+  background-color: #fff;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0, 1);
+  border-radius: 5px;
 }
 
 .edit-icon {

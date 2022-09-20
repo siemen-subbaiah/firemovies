@@ -13,11 +13,6 @@ const Info = ({ movie }) => {
   const [success, setSuccess] = useState(false);
   const [loginAlert, setloginAlert] = useState(false);
 
-  // HELPER STUFFS!
-  const a = movie.vote_average.toString().split('.')[0];
-  const b = movie.vote_average.toString().split('.')[1];
-  const vote = movie.vote_average === 0.0 ? 0 : a + b;
-
   const img = movie.backdrop_path
     ? `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`
     : 'https://www.omao.noaa.gov/sites/all/themes/noaa_omao/images/video-placeholder-640.jpg';
@@ -32,19 +27,14 @@ const Info = ({ movie }) => {
     }
   };
 
-  //Money formatter function
+  // NEW JS METHOD 😎
   function moneyFormatter(num) {
-    let p = num.toFixed(2).split('.');
-    return (
-      p[0]
-        .split('')
-        .reverse()
-        .reduce(function (acc, num, i, orig) {
-          return num === '-' ? acc : num + (i && !(i % 3) ? ',' : '') + acc;
-        }, '') +
-      '.' +
-      p[1]
-    );
+    const formatter = Intl.NumberFormat('en', {
+      notation: 'compact',
+      style: 'currency',
+      currency: 'usd',
+    });
+    return formatter.format(num);
   }
 
   const user = useSelector(({ auth }) => auth.user);
@@ -93,22 +83,23 @@ const Info = ({ movie }) => {
     validate();
   }, [movie.id, uid]);
 
-  console.log(movie.release_date);
-
   return (
     <div className='info'>
       <div className='banner ps-0 my-3 ps-lg-2 d-flex align-items-center flex-column flex-lg-row'>
         <img
           src={img}
           alt={movie.original_title}
-          className='my-0 mb-0  my-lg-3 img-fluid'
+          height={280}
+          width={550}
+          loading='lazy'
+          className='my-0 mb-0 my-lg-3 img-fluid'
         />
         <div className='add-det text-center'>
           <div
             className='vote d-none d-lg-block'
             style={{ border: `2px solid ${ratingColor()}` }}
           >
-            <span className='fw-bold'>{+vote}%</span>
+            <span className='fw-bold'>{movie.vote_average.toFixed(1)}</span>
           </div>
           <p className='my-2 d-none d-lg-block'>User Score</p>
           <div className='more-det d-flex justify-content-center mt-4 flex-column flex-lg-row'>
@@ -125,7 +116,7 @@ const Info = ({ movie }) => {
             </div>
             <div className='me-0 my-2 my-lg-0 me-lg-5'>
               <h6>Revenue:</h6>
-              <p>{moneyFormatter(movie.revenue)}$</p>
+              <p>{moneyFormatter(movie.revenue)}</p>
             </div>
             <div>
               <h6>Status:</h6>

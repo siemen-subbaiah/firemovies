@@ -49,8 +49,8 @@ const Banner = ({ url }) => {
                   </Col>
                   <Col lg={6} className='my-flex order-1 order-lg-2'>
                     <img
-                      src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path}`}
-                      alt={item.title}
+                      src={`https://image.tmdb.org/t/p/w500/${item?.backdrop_path}`}
+                      alt={item?.title}
                     />
                   </Col>
                 </Row>
